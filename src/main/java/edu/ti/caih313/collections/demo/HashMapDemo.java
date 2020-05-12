@@ -1,4 +1,4 @@
-package edu.ti.caih313.collections;
+package edu.ti.caih313.collections.demo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class HashMapDemo {
         for (String keyMountainName : map.keySet()) {
             Integer height = map.get(keyMountainName);
             System.out.println(keyMountainName +
-                    " --> " + height.intValue() + " feet.");
+                    " --> " + height + " feet.");
         }
         System.out.println();
     }
