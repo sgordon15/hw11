@@ -6,7 +6,8 @@ import java.util.*;
 
 public class PrintGenericDemo<T> {
     public static void main(String[] args) {
-        PrintGenericDemo<String> stringSortDemo = new PrintGenericDemo<>();
+        PrintGeneric<String> stringSortDemo = new PrintGeneric<>();
+
         List<String> wordList = new ArrayList<>();
         wordList.add("Bob");
         wordList.add("Smith");
@@ -26,31 +27,22 @@ public class PrintGenericDemo<T> {
         System.out.println("Print sorted wordList.");
         stringSortDemo.printCollection(wordList);
 
-        Name bob = new Name("Bob", "Smith");
-        Name jane = new Name("Jane", "Doe");
-        Name ironMan = new Name("Tony", "Stark");
-        Name boPeep = new Name("Bo", "Peep");
+        Name nameArray[] = {
+                new Name("John", "Smith"),
+                new Name("Karl", "Ng"),
+                new Name("Jeff", "Smith"),
+                new Name("Tom", "Rich"),
+                new Name("Bob", "Smith"),
+                new Name("Jane", "Doe"),
+                new Name("Tony", "Stark"),
+                new Name("Bo", "Peep")
+        };
 
-        List<Name> nameList = new ArrayList<>();
-        nameList.add(bob);
-        nameList.add(bob);
-        nameList.add(jane);
-        nameList.add(bob);
-        nameList.add(jane);
-        nameList.add(bob);
-        nameList.add(boPeep);
+        List<Name> nameList = Arrays.asList(nameArray);
 
-        PrintGenericDemo<Name> nameSortDemo = new PrintGenericDemo<>();
+        PrintGeneric<Name> printName = new PrintGeneric<>();
         System.out.print("\n");
         System.out.println("Print nameList.");
-        nameSortDemo.printCollection(nameList);
-    }
-
-    private void printCollection(Collection<T> collection) {
-        Iterator<T> personIterator = collection.iterator();
-        while (personIterator.hasNext()) {
-            T p = personIterator.next();
-            System.out.println(p.toString());
-        }
+        printName.printCollection(nameList);
     }
 }
