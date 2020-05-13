@@ -2,13 +2,13 @@ package edu.ti.caih313.collections.dataobj;
 
 public class Person {
     private Name name;
-    private Sex gender;
+    private Gender gender;
     private double age;
     private String emailAddress;
 
-    public enum Sex{MALE, FEMALE}
+    public enum Gender {MALE, FEMALE}
 
-    public Person(Name name, Sex gender) {
+    public Person(Name name, Gender gender) {
         this.name = name;
         this.gender = gender;
     }
@@ -21,7 +21,7 @@ public class Person {
         this.name = name;
     }
 
-    public Sex getGender() {
+    public Gender getGender() {
         return gender;
     }
 

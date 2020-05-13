@@ -5,9 +5,9 @@ import edu.ti.caih313.collections.dataobj.Person;
 
 import java.util.*;
 
-import static edu.ti.caih313.collections.dataobj.Person.Sex.*;
+import static edu.ti.caih313.collections.dataobj.Person.Gender.*;
 
-public class PrintObjInCollectionDemo {
+public class PrintPersonCollectionDemo {
 
     public static void main(String[] args) {
         Person bob = new Person(new Name("Bob", "Smith"), MALE);
