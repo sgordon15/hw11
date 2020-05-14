@@ -3,8 +3,8 @@ package edu.ti.caih313.collections.dataobj;
 import java.util.Objects;
 
 public class Name {
-    protected final String firstName;
-    protected final String lastName;
+    private final String firstName;
+    private final String lastName;
 
     public Name(String firstName, String lastName) {
         if (firstName == null || lastName == null) {
@@ -20,6 +20,20 @@ public class Name {
 
     public String getLastName() {
         return lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name = (Name) o;
+        return firstName.equals(name.firstName) &&
+                lastName.equals(name.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
     }
 
     @Override

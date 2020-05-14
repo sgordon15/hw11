@@ -6,9 +6,9 @@ import java.util.Iterator;
 public class PrintGeneric<T> {
 
     public void printCollection(Collection<T> collection) {
-        Iterator<T> personIterator = collection.iterator();
-        while (personIterator.hasNext()) {
-            T p = personIterator.next();
+        Iterator<T> tIterator = collection.iterator();
+        while (tIterator.hasNext()) {
+            T p = tIterator.next();
             System.out.println(p.toString());
         }
     }
