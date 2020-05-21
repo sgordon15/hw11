@@ -12,6 +12,7 @@ import static edu.ti.caih313.collections.dataobj.Person.Gender.*;
 
 public class PeopleFilterDemo {
     private static Map<String, Integer> families = new HashMap<String, Integer>();
+
     public static void main(String... args) {
         Person personArray[] = {
                 new Person(new Name("John", "Smith"), MALE, 42),
@@ -34,19 +35,19 @@ public class PeopleFilterDemo {
         System.out.print("\n");
         System.out.println("All persons older than 20");
         Arrays.stream(personArray)
-                .filter(p -> p.getAge()>20)
+                .filter(p -> p.getAge() > 20)
                 .forEach(e -> System.out.println(e.getName()));
 
         System.out.print("\n");
         System.out.println("All " + MALE + " persons");
         Arrays.stream(personArray)
-                .filter(p -> p.getGender()==MALE)
+                .filter(p -> p.getGender() == MALE)
                 .forEach(p -> System.out.println(p.getName()));
 
         System.out.print("\n");
         OptionalDouble averageFemaleAge =
                 Arrays.stream(personArray)
-                        .filter(p -> p.getGender()==FEMALE)
+                        .filter(p -> p.getGender() == FEMALE)
                         .mapToInt(Person::getAge) // <=> mapToInt(p -> p.getAge())
                         .average();
         if (averageFemaleAge.isPresent()) {
@@ -61,7 +62,7 @@ public class PeopleFilterDemo {
         System.out.print("\n");
         System.out.println("All persons in age order");
         Arrays.stream(personArray)
-                .sorted((p1,p2) -> (p1.getAge() - p2.getAge()))
+                .sorted((p1, p2) -> (p1.getAge() - p2.getAge()))
                 .forEach(e -> System.out.println(e.getName()));
 
         System.out.print("\n");
@@ -77,16 +78,16 @@ public class PeopleFilterDemo {
         System.out.print("\n");
         System.out.println("Youngest female: ");
         Arrays.stream(personArray)
-                .filter(p -> p.getGender()==FEMALE)
-                .sorted((p1,p2) -> (p1.getAge() - p2.getAge()))
+                .filter(p -> p.getGender() == FEMALE)
+                .sorted((p1, p2) -> (p1.getAge() - p2.getAge()))
                 .limit(1)
                 .forEach(p -> System.out.println(p.getName()));
 
         System.out.print("\n");
         System.out.println("Oldest male: ");
         Arrays.stream(personArray)
-                .filter(p -> p.getGender()==MALE)
-                .sorted((p1,p2) -> (p2.getAge() - p1.getAge()))
+                .filter(p -> p.getGender() == MALE)
+                .sorted((p1, p2) -> (p2.getAge() - p1.getAge()))
                 .limit(1)
                 .forEach(p -> System.out.println(p.getName()));
 
@@ -102,16 +103,16 @@ public class PeopleFilterDemo {
         Arrays.stream(personArray)
                 .map(p -> p.getName().getLastName())
                 .forEach(p -> makeHash(p));
-        for (String s: families.keySet()) {
+        for (String s : families.keySet()) {
             System.out.println("The " + s + " family has " + families.get(s) + " members.");
         }
     }
+
     public static void makeHash(String lastName) {
-        if(families.containsKey(lastName)) {
+        if (families.containsKey(lastName)) {
             Integer count = families.get(lastName);
             families.put(lastName, ++count);
-        }
-        else {
+        } else {
             families.put(lastName, 1);
         }
     }
