@@ -1,119 +1,75 @@
 package edu.ti.caih313.collections.aggregate;
+
+import edu.ti.caih313.collections.dataobj.EmailAddress;
 import edu.ti.caih313.collections.dataobj.Name;
 import edu.ti.caih313.collections.dataobj.Person;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static edu.ti.caih313.collections.dataobj.Person.Gender.*;
+import static edu.ti.caih313.collections.dataobj.Person.Gender.FEMALE;
+import static edu.ti.caih313.collections.dataobj.Person.Gender.MALE;
+import static edu.ti.caih313.collections.dataobj.EmailAddress.EmailType;
 
 public class PeopleFilterDemo {
-    private static Map<String, Integer> families = new HashMap<String, Integer>();
-
     public static void main(String... args) {
-        Person personArray[] = {
-                new Person(new Name("John", "Smith"), MALE, 42),
-                new Person(new Name("Karl", "Ng"), MALE, 73),
-                new Person(new Name("Jeff", "Smith"), MALE, 21),
-                new Person(new Name("Tom", "Rich"), MALE, 18),
-                new Person(new Name("Bob", "Smith"), MALE, 13),
-                new Person(new Name("Jane", "Doe"), FEMALE, 27),
-                new Person(new Name("Tony", "Stark"), MALE, 52),
-                new Person(new Name("Bo", "Peep"), FEMALE, 205)
-        };
 
-        System.out.println("All persons");
-        Arrays.stream(personArray).forEach(e -> System.out.println(e.getName()));
+        Person johnSmith = new Person(new Name("John", "Smith"), MALE, 42);
+        johnSmith.addEmail(EmailType.SCHOOL, "john.smith@ti.htc.edu");
+        johnSmith.addEmail(EmailType.HOME, "john@gmail.com");
+        johnSmith.addEmail(EmailType.WORK, "smith.john@careonerx.com");
 
-        System.out.print("\n");
-        long numOver20 = Arrays.stream(personArray).filter(p -> p.getAge() > 20).count();
-        System.out.println("Number of persons older than 20: " + numOver20);
+        Person karlNg = new Person(new Name("Karl", "Ng"), MALE, 73);
+        karlNg.addEmail(EmailType.SCHOOL, "karl.ng@ti.htc.edu");
+        karlNg.addEmail(EmailType.WORK, "ng.karl@careonerx.com");
 
-        System.out.print("\n");
-        System.out.println("All persons older than 20");
+        Person jeffSmith = new Person(new Name("Jeff", "Smith"), MALE, 21);
+        jeffSmith.addEmail(EmailType.SCHOOL, "jeff.smith@ti.htc.edu");
+        jeffSmith.addEmail(EmailType.HOME, "jeff@gmail.com");
+
+        Person tomRich = new Person(new Name("Tom", "Rich"), MALE, 18);
+        tomRich.addEmail(EmailType.SCHOOL, "tom.rich@ti.htc.edu");
+
+        Person bobSmith = new Person(new Name("Bob", "Smith"), MALE, 13);
+        bobSmith.addEmail(EmailType.SCHOOL, "bob.smith@ti.htc.edu");
+
+        Person janeDoe = new Person(new Name("Jane", "Doe"), FEMALE, 27);
+        janeDoe.addEmail(EmailType.SCHOOL, "jane.doe@ti.htc.edu");
+        janeDoe.addEmail(EmailType.HOME, "jane@gmail.com");
+
+        Person tonyStark = new Person(new Name("Tony", "Stark"), MALE, 52);
+        tonyStark.addEmail(EmailType.SCHOOL, "tony.stark@ti.htc.edu");
+        tonyStark.addEmail(EmailType.WORK, "stark.tony@careonerx.com");
+
+        Person boPeep = new Person(new Name("Bo", "Peep"), FEMALE, 205);
+        boPeep.addEmail(EmailType.SCHOOL, "bo.peep@ti.htc.edu");
+        boPeep.addEmail(EmailType.HOME, "bo@gmail.com");
+        boPeep.addEmail(EmailType.WORK, "peep.bo@careonerx.com");
+
+        Person personArray[] = {johnSmith, karlNg, jeffSmith, tomRich, bobSmith, janeDoe, tonyStark, boPeep};
+
+
+        System.out.println("List of Person's school email addresses");
         Arrays.stream(personArray)
-                .filter(p -> p.getAge() > 20)
-                .forEach(e -> System.out.println(e.getName()));
+                .forEach(e -> System.out.println(e.getEmailMap().get(EmailType.SCHOOL)));
 
-        System.out.print("\n");
-        System.out.println("All " + MALE + " persons");
+        System.out.println();
+        System.out.println("List of ALL Person's emails.");
         Arrays.stream(personArray)
-                .filter(p -> p.getGender() == MALE)
-                .forEach(p -> System.out.println(p.getName()));
+                .forEach(e -> System.out.println(e.getName().getFirstName() + e.getName().getLastName() +
+                        "'s email addresses are: " + e.getEmailMap().values()));
 
-        System.out.print("\n");
-        OptionalDouble averageFemaleAge =
-                Arrays.stream(personArray)
-                        .filter(p -> p.getGender() == FEMALE)
-                        .mapToInt(Person::getAge) // <=> mapToInt(p -> p.getAge())
-                        .average();
-        if (averageFemaleAge.isPresent()) {
-            System.out.println("Average age of  "
-                    + FEMALE + " persons = "
-                    + averageFemaleAge.getAsDouble());
-        } else {
-            System.out.println("Average age of  "
-                    + FEMALE + " persons is not available.");
-        }
-
-        System.out.print("\n");
-        System.out.println("All persons in age order");
+        System.out.println();
+        System.out.println("Print out of how many email addresses each Person has.");
         Arrays.stream(personArray)
-                .sorted((p1, p2) -> (p1.getAge() - p2.getAge()))
-                .forEach(e -> System.out.println(e.getName()));
+                .sorted((p1, p2) -> p1.getEmailMap().size() - p2.getEmailMap().size())
+                .forEach(p -> System.out.println(p.getName().getFirstName() + p.getName().getLastName() +
+                        " has " + p.getEmailMap().size() + " email addresses."));
 
-        System.out.print("\n");
-        System.out.println("First four last names uppercased.");
-        Stream<String> fourLastNamesUpperStream =
-                Arrays.stream(personArray)
-                        .map(p -> p.getName().getLastName().toUpperCase())
-                        .sorted()
-                        .limit(4);
-        fourLastNamesUpperStream.forEach(s -> System.out.print(s + ", "));
-
-        System.out.print("\n");
-        System.out.print("\n");
-        System.out.println("Youngest female: ");
+        System.out.println();
+        System.out.println("List of all Person's emails over the age of 30:");
         Arrays.stream(personArray)
-                .filter(p -> p.getGender() == FEMALE)
-                .sorted((p1, p2) -> (p1.getAge() - p2.getAge()))
-                .limit(1)
-                .forEach(p -> System.out.println(p.getName()));
-
-        System.out.print("\n");
-        System.out.println("Oldest male: ");
-        Arrays.stream(personArray)
-                .filter(p -> p.getGender() == MALE)
-                .sorted((p1, p2) -> (p2.getAge() - p1.getAge()))
-                .limit(1)
-                .forEach(p -> System.out.println(p.getName()));
-
-        System.out.print("\n");
-        System.out.println("Unique last names: ");
-        Arrays.stream(personArray)
-                .map(p -> p.getName().getLastName())
-                .distinct()
-                .forEach(p -> System.out.println(p));
-
-        System.out.print("\n");
-        System.out.println("Number of people in each family: ");
-        Arrays.stream(personArray)
-                .map(p -> p.getName().getLastName())
-                .forEach(p -> makeHash(p));
-        for (String s : families.keySet()) {
-            System.out.println("The " + s + " family has " + families.get(s) + " members.");
-        }
-    }
-
-    public static void makeHash(String lastName) {
-        if (families.containsKey(lastName)) {
-            Integer count = families.get(lastName);
-            families.put(lastName, ++count);
-        } else {
-            families.put(lastName, 1);
-        }
+                .filter(p -> p.getAge()>30)
+                .forEach(e -> System.out.println(e.getName().getFirstName() + " " + e.getName().getLastName() +
+                        "'s email addresses are: " + e.getEmailMap().values()));
     }
 }
